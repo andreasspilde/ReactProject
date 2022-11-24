@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 function Split({ imageSrc }){
     const [bilder , setBilder] = useState([]);
+    var sorted = true;
     const ImageSplitter = (img) => {
         var image = new Image();
         image.onload = () => {
@@ -9,15 +10,21 @@ function Split({ imageSrc }){
 
             const width = image.width;
             const height = image.height;
-            const w = width / 3;
-            const h = height / 3;
+            const w = width / 4;
+            const h = height / 4;
             var z = 0
-            for (let i = 0; i < 3; i++) {
-                for(let y = 0; y < 3; y++){
+            for (let i = 0; i < 4; i++) {
+                for(let y = 0; y < 4; y++){
                     const canvas = document.createElement("canvas");
                     const ctx = canvas.getContext("2d");
-                    ctx.drawImage(image, y * w, i * h, w, h, -1, -1, 200, 200);
+                    ctx.drawImage(image, y * w, i * h, w, h, -1, -1, 175, 175);
+                    
+                    if(z===15){
+                        ctx.fillRect(0,0,175,175)
+    
+                    }
                     outArray[z] =  [canvas.toDataURL(),z];
+
                     z = z+1
                 }
             }
@@ -36,9 +43,9 @@ function Split({ imageSrc }){
     function handleClick(nmbr){
         var hvorvier = -1
         var bytt = 0
-        for(let i=0; i<9; i++){
+        for(let i=0; i<16; i++){
             if(bilder[i][1] === nmbr){hvorvier = i}
-            if(bilder[i][1] === 8){bytt = i}
+            if(bilder[i][1] === 15){bytt = i}
         }
         var old = new Array([])
         old = [...bilder];
@@ -52,26 +59,43 @@ function Split({ imageSrc }){
             old[bytt] = bilder[hvorvier]
             old[hvorvier] = hold
         }
-        if(hvorvier+3 === bytt){
+        if(hvorvier+4 === bytt){
             hold = bilder[bytt]
             old[bytt] = bilder[hvorvier]
             old[hvorvier] = hold
         }
-        if(hvorvier-3 === bytt){
+        if(hvorvier-4 === bytt){
             hold = bilder[bytt]
             old[bytt] = bilder[hvorvier]
             old[hvorvier] = hold
         }
-        //todo add victory screen?
+        sorted = true
+        var i = 1
+        for(i; i< old.length; i++){
+            if(old[i][1] < old[i-1][1]){
+                sorted = false
+            }
+        }
+        console.log(sorted)
         setBilder(old)
+        if(sorted === true){
+            victory()
+        }
     }
-
+    function victory( sorted ){
+        if(sorted){
+            return(
+                <div>You have won!</div>
+            )
+        }
+    }
 
     return(
             <div class="tullball">
                 {bilder.map((x) => (
-                    <img alt ='x1' src = {x[0]} onClick={() => handleClick(x[1])}/>
+                    <img key='x[0]' alt ='x1' src = {x[0]} onClick={() => handleClick(x[1])}/>
                 ))}
+                <victory sorted = {sorted}/>
             </div>
     );
 }

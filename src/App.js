@@ -4,7 +4,6 @@ import BildeTilBruk from './BildeTilBruk';
 import Split from './SplitImage';
 //import axios from 'axios'
 
-
 function App() {
   const [image, setImage] = useState('')
   
