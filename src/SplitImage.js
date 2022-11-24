@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 
 function Split({ imageSrc }){
     const [bilder , setBilder] = useState([]);
-    var sorted = true;
     const ImageSplitter = (img) => {
         var image = new Image();
         image.onload = () => {
@@ -28,8 +27,7 @@ function Split({ imageSrc }){
                     z = z+1
                 }
             }
-            //TODO lage siste bildet hvit/svart
-            outArray.sort(() => (Math.random()> .5 )? 1: -1);
+            //outArray.sort(() => (Math.random()> .5 )? 1: -1);
             setBilder(outArray);
         };
 
@@ -69,34 +67,42 @@ function Split({ imageSrc }){
             old[bytt] = bilder[hvorvier]
             old[hvorvier] = hold
         }
-        sorted = true
-        var i = 1
-        for(i; i< old.length; i++){
-            if(old[i][1] < old[i-1][1]){
-                sorted = false
-            }
-        }
-        console.log(sorted)
         setBilder(old)
-        if(sorted === true){
-            victory()
-        }
-    }
-    function victory( sorted ){
-        if(sorted){
-            return(
-                <div>You have won!</div>
-            )
-        }
     }
 
-    return(
+    function victory(){
+        if(bilder.length < 1){
+            return false
+        }
+        var i = 1
+        for(i; i< bilder.length; i++){
+            if(bilder[i][1] < bilder[i-1][1]){
+                return false
+            }
+        }
+        return true
+    }
+
+    if(victory()){
+        return(
+            <div>
+                <h1>Winner!</h1>
+                <div class="tullball">
+                    {bilder.map((x) => (
+                    <img key = 'x[0]' alt = 'x1' src = {x[0]}/>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+    else{
+        return(
             <div class="tullball">
                 {bilder.map((x) => (
                     <img key='x[0]' alt ='x1' src = {x[0]} onClick={() => handleClick(x[1])}/>
                 ))}
-                <victory sorted = {sorted}/>
             </div>
-    );
+        );
+    }
 }
 export default Split;
