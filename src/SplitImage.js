@@ -27,7 +27,7 @@ function Split({ imageSrc }){
                     z = z+1
                 }
             }
-            //outArray.sort(() => (Math.random()> .5 )? 1: -1);
+            outArray.sort(() => (Math.random()> .5 )? 1: -1);
             setBilder(outArray);
         };
 
