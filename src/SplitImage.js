@@ -39,33 +39,33 @@ function Split({ imageSrc }){
     }, [imageSrc]);
 
     function handleClick(nmbr){
-        var hvorvier = -1
-        var bytt = 0
+        var whereWeAre = -1
+        var canChange = 0
         for(let i=0; i<16; i++){
-            if(bilder[i][1] === nmbr){hvorvier = i}
-            if(bilder[i][1] === 15){bytt = i}
+            if(bilder[i][1] === nmbr){whereWeAre = i}
+            if(bilder[i][1] === 15){canChange = i}
         }
         var old = new Array([])
         old = [...bilder];
-        if(hvorvier+1 === bytt){
-            var hold = bilder[bytt]
-            old[bytt] = bilder[hvorvier]
-            old[hvorvier] = hold
+        if(whereWeAre+1 === canChange){
+            var hold = bilder[canChange]
+            old[canChange] = bilder[whereWeAre]
+            old[whereWeAre] = hold
         }
-        if(hvorvier-1 === bytt){
-            hold = bilder[bytt]
-            old[bytt] = bilder[hvorvier]
-            old[hvorvier] = hold
+        if(whereWeAre-1 === canChange){
+            hold = bilder[canChange]
+            old[canChange] = bilder[whereWeAre]
+            old[whereWeAre] = hold
         }
-        if(hvorvier+4 === bytt){
-            hold = bilder[bytt]
-            old[bytt] = bilder[hvorvier]
-            old[hvorvier] = hold
+        if(whereWeAre+4 === canChange){
+            hold = bilder[canChange]
+            old[canChange] = bilder[whereWeAre]
+            old[whereWeAre] = hold
         }
-        if(hvorvier-4 === bytt){
-            hold = bilder[bytt]
-            old[bytt] = bilder[hvorvier]
-            old[hvorvier] = hold
+        if(whereWeAre-4 === canChange){
+            hold = bilder[canChange]
+            old[canChange] = bilder[whereWeAre]
+            old[whereWeAre] = hold
         }
         setBilder(old)
     }
@@ -87,9 +87,9 @@ function Split({ imageSrc }){
         return(
             <div>
                 <h1>Winner!</h1>
-                <div class="tullball">
+                <div className="tullball">
                     {bilder.map((x) => (
-                    <img key = 'x[0]' alt = 'x1' src = {x[0]}/>
+                    <img key = {x[0]} alt = 'x1' src = {x[0]}/>
                     ))}
                 </div>
             </div>
@@ -97,9 +97,9 @@ function Split({ imageSrc }){
     }
     else{
         return(
-            <div class="tullball">
+            <div className="tullball">
                 {bilder.map((x) => (
-                    <img key='x[0]' alt ='x1' src = {x[0]} onClick={() => handleClick(x[1])}/>
+                    <img key={x[1]} alt ='x1' src = {x[0]} onClick={() => handleClick(x[1])}/>
                 ))}
             </div>
         );
