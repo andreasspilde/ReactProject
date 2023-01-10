@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 function Split({ imageSrc }){
     const [bilder , setBilder] = useState([]);
+    const [count , setCount] = useState(0);
     const ImageSplitter = (img) => {
         var image = new Image();
         image.onload = () => {
@@ -29,6 +30,7 @@ function Split({ imageSrc }){
             }
             outArray.sort(() => (Math.random()> .5 )? 1: -1);
             setBilder(outArray);
+            setCount(0);
         };
 
         image.src = img;
@@ -68,6 +70,8 @@ function Split({ imageSrc }){
             old[whereWeAre] = hold
         }
         setBilder(old)
+        var teller = count + 1
+        setCount(teller)
     }
 
     function victory(){
@@ -86,10 +90,10 @@ function Split({ imageSrc }){
     if(victory()){
         return(
             <div>
-                <h1>Winner!</h1>
+                <h1>Winner! with {count} moves</h1>
                 <div className="tullball">
                     {bilder.map((x) => (
-                    <img key = {x[0]} alt = 'x1' src = {x[0]}/>
+                    <img key = {x[1]} alt = 'x1' src = {x[0]}/>
                     ))}
                 </div>
             </div>
@@ -97,12 +101,15 @@ function Split({ imageSrc }){
     }
     else{
         return(
-            <div className="tullball">
-                {bilder.map((x) => (
-                    <img key={x[1]} alt ='x1' src = {x[0]} onClick={() => handleClick(x[1])}/>
-                ))}
+            <div>
+                <h1> Number of moves {count}</h1>
+                <div className="tullball">
+                    {bilder.map((x) => (
+                        <img key={x[1]} alt ='x1' src = {x[0]} onClick={() => handleClick(x[1])}/>
+                    ))}
+                </div>
             </div>
-        );
+        )
     }
 }
 export default Split;
