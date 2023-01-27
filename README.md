@@ -18,4 +18,5 @@ The page will reload when you make changes.\
 
 This is just a small project done by me for me. It is just to play around with features and learn.
 
+The program can be viewed through vercel at react-project-andreasspilde.vercel.app
 
