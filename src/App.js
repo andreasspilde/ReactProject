@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState } from 'react'
 import BildeTilBruk from './BildeTilBruk';
 import Split from './SplitImage';
-import axios, { Axios } from 'axios'
+import axios from 'axios'
 
 function App() {
   const [image, setImage] = useState('')
