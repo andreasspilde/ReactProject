@@ -18,12 +18,14 @@ function App() {
   }
 
   function getPictureFromAPI(){
+    let myImg = new Image();
     axios({
       method: 'get',
       url: "https://picsum.photos/300"
       })
       .then(res => {
-        setImage(res.request.responseURL);
+        myImg = res.request.responseURL
+        setImage(myImg);
       })
     }
 

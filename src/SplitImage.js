@@ -3,24 +3,27 @@ import React, { useState, useEffect } from 'react'
 function Split({ imageSrc }){
     const [bilder , setBilder] = useState([]);
     const [count , setCount] = useState(0);
+    let antBilder = 4;
+    let piksels = 700;
     const ImageSplitter = (img) => {
         var image = new Image();
+        image.setAttribute('crossorigin', 'anonymous');
+        piksels = piksels/antBilder;
         image.onload = () => {
             const outArray = [];
-
             const width = image.width;
             const height = image.height;
-            const w = width / 4;
-            const h = height / 4;
+            const w = width / antBilder;
+            const h = height / antBilder;
             var z = 0
-            for (let i = 0; i < 4; i++) {
-                for(let y = 0; y < 4; y++){
+            for (let i = 0; i < antBilder; i++) {
+                for(let y = 0; y < antBilder; y++){
                     const canvas = document.createElement("canvas");
                     const ctx = canvas.getContext("2d");
-                    ctx.drawImage(image, y * w, i * h, w, h, -1, -1, 175, 175);
+                    ctx.drawImage(image, y * w, i * h, w, h, -1, -1, piksels, piksels);
                     
                     if(z===15){
-                        ctx.fillRect(0,0,175,175)
+                        ctx.fillRect(0,0,piksels,piksels)
     
                     }
                     outArray[z] =  [canvas.toDataURL(),z];
@@ -43,6 +46,7 @@ function Split({ imageSrc }){
     function handleClick(nmbr){
         var whereWeAre = -1
         var canChange = 0
+        var teller = count;
         for(let i=0; i<16; i++){
             if(bilder[i][1] === nmbr){whereWeAre = i}
             if(bilder[i][1] === 15){canChange = i}
@@ -53,24 +57,27 @@ function Split({ imageSrc }){
             var hold = bilder[canChange]
             old[canChange] = bilder[whereWeAre]
             old[whereWeAre] = hold
+            teller = count + 1
         }
         if(whereWeAre-1 === canChange){
             hold = bilder[canChange]
             old[canChange] = bilder[whereWeAre]
             old[whereWeAre] = hold
+            teller = count + 1
         }
         if(whereWeAre+4 === canChange){
             hold = bilder[canChange]
             old[canChange] = bilder[whereWeAre]
             old[whereWeAre] = hold
+            teller = count + 1
         }
         if(whereWeAre-4 === canChange){
             hold = bilder[canChange]
             old[canChange] = bilder[whereWeAre]
             old[whereWeAre] = hold
+            teller = count + 1
         }
         setBilder(old)
-        var teller = count + 1
         setCount(teller)
     }
 
