@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
+//TODO, sjekke at brettet er løsbart
 function Split({ imageSrc }){
     const [bilder , setBilder] = useState([]);
     const [count , setCount] = useState(0);
