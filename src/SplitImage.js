@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PossibleToSolve from './PossibleToSolve';
 
 //TODO, sjekke at brettet er løsbart
 function Split({ imageSrc }){
@@ -32,9 +33,15 @@ function Split({ imageSrc }){
                     z = z+1
                 }
             }
-            outArray.sort(() => (Math.random()> .5 )? 1: -1);
+            randomArray(outArray);
+            while(!PossibleToSolve(outArray)){
+                randomArray(outArray);
+            }
             setBilder(outArray);
             setCount(0);
+            //Check for possible solution
+            //setBilder(outArray);
+            //setCount(0);
         };
 
         image.src = img;
@@ -44,6 +51,9 @@ function Split({ imageSrc }){
         if (imageSrc) ImageSplitter(imageSrc);
     }, [imageSrc]);
 
+    function randomArray(array){
+        array.sort(() => (Math.random()> .5 )? 1: -1);
+    }
     function handleClick(nmbr){
         var whereWeAre = -1
         var canChange = 0
