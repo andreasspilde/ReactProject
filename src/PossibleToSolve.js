@@ -22,13 +22,9 @@ export default function PossibleToSolve(outArray) {
         }
     }
     if((sum % 2) === 1){
-        console.log(true)
-        console.log(sum)
         return(true);
     }
     else{
-        console.log(false)
-        console.log(sum)
         return(false);
     }
 }
